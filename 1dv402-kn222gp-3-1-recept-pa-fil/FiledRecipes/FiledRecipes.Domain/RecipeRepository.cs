@@ -128,59 +128,126 @@ namespace FiledRecipes.Domain
             }
         }
 
-        public void Load()
+        // Load method.
+        // Using "virtual" since it should be able to be overridden in a derived class.
+        public virtual void Load()
         {
-            // Creates a list.
+            RecipeReadStatus status = RecipeReadStatus.Indefinite;
+            Recipe localRecipe = null;
+
+            // 1. Creates a list.
             List<IRecipe> recipes = new List<IRecipe>();
 
-            RecipeReadStatus status = RecipeReadStatus.Indefinite;
-            Recipe recipe = null;
-
-            try
+            // 2. Creates a reader that can read a textfile.
+            // the "using" statement makes sure that unmanaged resources are disposed correctly.
+            using (StreamReader reader = new StreamReader("App_Data/Recipes.txt"))
             {
-                Console.Clear();
-
-                // Creates a reader that can read a textfile.
-                using (StreamReader reader = new StreamReader("App_Data/Recipes.txt"))
+                // 3. Reads the file, one line at a time.
+                string line;
+                while ((line = reader.ReadLine()) != null)
                 {
-                    // Reads the file, one line at a time.
-                    string line = null;
-                    while ((line = reader.ReadLine()) != null)
+                    switch (line)
                     {
-                        switch(line)
-                        {
-                            // If the readed line is the same as SectionRecipe, change status.
-                            case SectionRecipe:
-                                status = RecipeReadStatus.New; // Status is a new recipe.
-                                break;
+                        // If the readed line is the same as SectionRecipe, change status.
+                        case SectionRecipe:
+                            status = RecipeReadStatus.New; // Status is a new recipe.
+                            break;
 
-                            // If the readed line is the same as SectionIngredients, change status.
-                            case(SectionIngredients):
-                                status = RecipeReadStatus.Ingredient; // Status is the ingredient section.
-                                break;
+                        // If the readed line is the same as SectionIngredients, change status.
+                        case (SectionIngredients):
+                            status = RecipeReadStatus.Ingredient; // Status is the ingredient section.
+                            break;
 
-                            // If the readed line is the same as SectionInstructions, change status.
-                            case(SectionInstructions):
-                                status = RecipeReadStatus.Instruction; // Status is the instruction section.
-                                break;
-                        
+                        // If the readed line is the same as SectionInstructions, change status.
+                        case (SectionInstructions):
+                            status = RecipeReadStatus.Instruction; // Status is the instruction section.
+                            break;
 
-                        }
-                                // Presents the readed line.
-                                Console.WriteLine(line);
-                        }
+                        // If it's none of the above...
+                        default:
+                            // Check which status is currently active.
+                            switch (status)
+                            {
+                                    // If it's a new recipe, create a new object from the Recipeclass with the recipes name (line).
+                                case RecipeReadStatus.New:
+                                    localRecipe = new Recipe(line);
+                                    recipes.Add(localRecipe);
+                                    break;
+
+                                    // It it's a ingredient, split the line into 3 sections, the ";" devides the sections.
+                                case RecipeReadStatus.Ingredient:
+                                    string[] splitIngredient = line.Split(new String[] { ";" }, StringSplitOptions.None);
+
+                                    // If it's more than 3 sections, something is wrong.
+                                    if (splitIngredient.Length != 3)
+                                    {
+                                        throw new FileFormatException();
+                                    }
+
+                                    // Create a ingredient object with the 3 sections, amount, measure and name.
+                                    Ingredient ingredient = new Ingredient();
+                                    ingredient.Amount = splitIngredient[0];
+                                    ingredient.Measure = splitIngredient[1];
+                                    ingredient.Name = splitIngredient[2];
+                                    localRecipe.Add(ingredient);
+                                    break;
+
+                                    // If it's an instruction, just add the read line.
+                                case RecipeReadStatus.Instruction:
+                                    localRecipe.Add(line);
+                                    break;
+
+                                    // If it's none of the above, something is wrong.
+                                case RecipeReadStatus.Indefinite:
+                                    throw new FileFormatException();
+
+                            }
+                            break;
                     }
                 }
-            
-            catch (Exception ex)
-            {
-                Console.WriteLine("ERROR - unexpected error occured.\n", ex.Message);
             }
+            // 4-5 Sorts the list alphabetaclly.
+            _recipes = recipes.OrderBy(recipe => recipe.Name).ToList();
+
+            // 6. Indicates that the list with recipes are unchanged.
+            IsModified = false;
+
+            // 7. Event that tells the recipe has been read.
+            OnRecipesChanged(EventArgs.Empty);
         }
 
-        public void Save()
+
+        // Save method.
+        // This also uses "virtual" since it should be able to be overridden in a derived class.
+        public virtual void Save()
         {
-            
+            // 1. Opens the textfile.
+            using (StreamWriter writer = new StreamWriter("App_Data/Recipe.txt"))
+            {
+
+                // 2. Loop for all recipes.
+                foreach (var recipe in _recipes)
+                {
+                    // The recipes names.
+                    writer.WriteLine(SectionRecipe);
+                    writer.WriteLine(recipe.Name);
+
+                    // The ingredients, also uses a "foreach" since there are more than one ingredient in each recipe.
+                    writer.WriteLine(SectionIngredients);
+                    foreach (var ingredient in recipe.Ingredients)
+                    {
+                        writer.WriteLine("{0};{1};{2}", ingredient.Amount, ingredient.Measure, ingredient.Name);
+                    }
+
+                    // The instructions. This also uses a "foreach" since there are more than one line of instructions.
+                    writer.WriteLine(SectionInstructions);
+                    foreach (var instruction in recipe.Instructions)
+                    {
+                        writer.WriteLine(instruction);
+
+                    }
+                }
+            }
         }
     }
 }
