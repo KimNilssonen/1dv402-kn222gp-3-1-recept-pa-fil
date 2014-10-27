@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="FiledRecipes.App.Controls.Menu" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="19" Y="4.5" Width="1.5" />
+    <Position X="19" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAABAAAA=</HashCode>
       <FileName>App\Controls\Menu.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FiledRecipes.App.Controls.MenuItem" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="20.75" Y="4.5" Width="1.5" />
+    <Position X="20.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIAEAAAABAAAAAAAAAAAAAEAKAAAABA=</HashCode>
       <FileName>App\Controls\MenuItem.cs</FileName>
@@ -38,28 +38,28 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FiledRecipes.StringExtensions" Collapsed="true">
-    <Position X="20.75" Y="5.5" Width="1.5" />
+    <Position X="20.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>App\Extensions\StringExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FiledRecipes.Application" Collapsed="true">
-    <Position X="15.5" Y="4.5" Width="1.5" />
+    <Position X="15.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Application.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FiledRecipes.ContainerBootstrapper" Collapsed="true">
-    <Position X="17.25" Y="4.5" Width="1.5" />
+    <Position X="17.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>ContainerBootstrapper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FiledRecipes.Program" Collapsed="true">
-    <Position X="17.25" Y="5.5" Width="1.5" />
+    <Position X="17.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
@@ -174,7 +174,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FiledRecipes.Presenters.MenuPresenter" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15.5" Y="5.5" Width="1.5" />
+    <Position X="15.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAACAAAABAAAA=</HashCode>
       <FileName>Presenters\MenuPresenter.cs</FileName>
@@ -182,7 +182,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FiledRecipes.Presenters.RecipePresenter" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="19" Y="5.5" Width="1.5" />
+    <Position X="19" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAgIAAAABAAAAAAAAAAAAAAAEEAAAAACAAAAAAAAA=</HashCode>
       <FileName>Presenters\RecipePresenter.cs</FileName>
@@ -190,7 +190,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FiledRecipes.Presenters.ToolsPresenter" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="17.25" Y="6.5" Width="1.5" />
+    <Position X="17.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Presenters\ToolsPresenter.cs</FileName>
@@ -198,7 +198,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="FiledRecipes.Properties.Strings" Collapsed="true">
-    <Position X="15.5" Y="6.5" Width="1.5" />
+    <Position X="15.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQgAAIkAQgCEAEACAAABEDAgKQQpAICAAAAAAAAAAoA=</HashCode>
     </TypeIdentifier>
@@ -214,20 +214,20 @@
   <Class Name="FiledRecipes.Views.RecipeView" Collapsed="true">
     <Position X="2.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\RecipeView.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="FiledRecipes.App.Controls.IMenu" Collapsed="true">
-    <Position X="17.25" Y="7.75" Width="1.5" />
+    <Position X="17.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAABAAAA=</HashCode>
       <FileName>App\Controls\IMenu.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="FiledRecipes.App.Controls.IMenuItem" Collapsed="true">
-    <Position X="19" Y="7.75" Width="1.5" />
+    <Position X="19" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIAEAAAABAAAAAAAAAAAAAEAKAAAAAA=</HashCode>
       <FileName>App\Controls\IMenuItem.cs</FileName>
@@ -241,14 +241,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="FiledRecipes.App.Input.ICommand" Collapsed="true">
-    <Position X="15.5" Y="7.75" Width="1.5" />
+    <Position X="15.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>App\Input\ICommand.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="FiledRecipes.App.Mvp.IMenuModel" Collapsed="true">
-    <Position X="20.75" Y="7.75" Width="1.5" />
+    <Position X="20.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>App\Mvp\IMenuModel.cs</FileName>
@@ -262,14 +262,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="FiledRecipes.Presenters.IMenuPresenter" Collapsed="true">
-    <Position X="15.5" Y="8.5" Width="1.5" />
+    <Position X="15.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Presenters\IMenuPresenter.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="FiledRecipes.Presenters.IRecipePresenter" Collapsed="true">
-    <Position X="17.25" Y="8.5" Width="1.5" />
+    <Position X="17.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAgIAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Presenters\IRecipePresenter.cs</FileName>
@@ -297,7 +297,7 @@
     </TypeIdentifier>
   </Interface>
   <Enum Name="FiledRecipes.App.Controls.MessagePanelOptions" Collapsed="true">
-    <Position X="15.5" Y="9.5" Width="1.5" />
+    <Position X="15.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAgAAAAAAAAAAAECAAAI=</HashCode>
       <FileName>App\Controls\MessagePanel.cs</FileName>

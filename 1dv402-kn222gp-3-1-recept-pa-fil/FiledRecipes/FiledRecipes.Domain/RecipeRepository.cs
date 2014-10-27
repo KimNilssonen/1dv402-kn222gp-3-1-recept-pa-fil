@@ -127,9 +127,56 @@ namespace FiledRecipes.Domain
                 handler(this, e);
             }
         }
+
         public void Load()
         {
-            
+            // Creates a list.
+            List<IRecipe> recipes = new List<IRecipe>();
+
+            RecipeReadStatus status = RecipeReadStatus.Indefinite;
+            Recipe recipe = null;
+
+            try
+            {
+                // Creates a reader that can read a textfile.
+                using (StreamReader reader = new StreamReader(_path))
+                {
+                    // Reads the file, one line at a time.
+                    string line = null;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        // Checks if there is a empty line.
+                        if(line != "")
+                        {
+                            // If the readed line is the same as SectionRecipe, change status.
+                            if(line == SectionRecipe)
+                            {
+                                status = RecipeReadStatus.New; // Status is a new recipe.
+                            }
+
+                            // If the readed line is the same as SectionIngredients, change status.
+                            if(line == SectionIngredients)
+                            {
+                                status = RecipeReadStatus.Ingredient; // Status is the ingredient section.
+                            }
+
+                            // If the readed line is the same as SectionInstructions, change status.
+                            if(line == SectionInstructions)
+                            {
+                                status = RecipeReadStatus.Instruction; // Status is the instruction section.
+                            }
+
+
+                        }
+                        // Presents the readed line.
+                        Console.WriteLine(line);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR - unexpected error occured.\n", ex.Message);
+            }
         }
 
         public void Save()
