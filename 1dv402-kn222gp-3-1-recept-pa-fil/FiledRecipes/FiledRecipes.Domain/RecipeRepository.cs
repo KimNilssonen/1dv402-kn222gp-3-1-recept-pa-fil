@@ -138,41 +138,40 @@ namespace FiledRecipes.Domain
 
             try
             {
+                Console.Clear();
+
                 // Creates a reader that can read a textfile.
-                using (StreamReader reader = new StreamReader(_path))
+                using (StreamReader reader = new StreamReader("App_Data/Recipes.txt"))
                 {
                     // Reads the file, one line at a time.
                     string line = null;
                     while ((line = reader.ReadLine()) != null)
                     {
-                        // Checks if there is a empty line.
-                        if(line != "")
+                        switch(line)
                         {
                             // If the readed line is the same as SectionRecipe, change status.
-                            if(line == SectionRecipe)
-                            {
+                            case SectionRecipe:
                                 status = RecipeReadStatus.New; // Status is a new recipe.
-                            }
+                                break;
 
                             // If the readed line is the same as SectionIngredients, change status.
-                            if(line == SectionIngredients)
-                            {
+                            case(SectionIngredients):
                                 status = RecipeReadStatus.Ingredient; // Status is the ingredient section.
-                            }
+                                break;
 
                             // If the readed line is the same as SectionInstructions, change status.
-                            if(line == SectionInstructions)
-                            {
+                            case(SectionInstructions):
                                 status = RecipeReadStatus.Instruction; // Status is the instruction section.
-                            }
-
+                                break;
+                        
 
                         }
-                        // Presents the readed line.
-                        Console.WriteLine(line);
+                                // Presents the readed line.
+                                Console.WriteLine(line);
+                        }
                     }
                 }
-            }
+            
             catch (Exception ex)
             {
                 Console.WriteLine("ERROR - unexpected error occured.\n", ex.Message);
