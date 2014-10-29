@@ -138,74 +138,83 @@ namespace FiledRecipes.Domain
             // 1. Creates a list.
             List<IRecipe> recipes = new List<IRecipe>();
 
+
             // 2. Creates a reader that can read a textfile.
-            // the "using" statement makes sure that unmanaged resources are disposed correctly.
-            using (StreamReader reader = new StreamReader("App_Data/Recipes.txt"))
+            // the "using" statement makes sure that unmanaged resources are disposed correctly,
+            // in other words, the streamreader closes after the "using" block ends.
+            using (StreamReader reader = new StreamReader(_path))
             {
                 // 3. Reads the file, one line at a time.
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    switch (line)
+                    // If the line is not empty.
+                    if (line != "")
                     {
-                        // If the readed line is the same as SectionRecipe, change status.
-                        case SectionRecipe:
-                            status = RecipeReadStatus.New; // Status is a new recipe.
-                            break;
+                        switch (line)
+                        {
+                            // If the readed line is the same as SectionRecipe, change status.
+                            case SectionRecipe:
+                                status = RecipeReadStatus.New; // Status is a new recipe.
+                                break;
 
-                        // If the readed line is the same as SectionIngredients, change status.
-                        case (SectionIngredients):
-                            status = RecipeReadStatus.Ingredient; // Status is the ingredient section.
-                            break;
+                            // If the readed line is the same as SectionIngredients, change status.
+                            case (SectionIngredients):
+                                status = RecipeReadStatus.Ingredient; // Status is the ingredient section.
+                                break;
 
-                        // If the readed line is the same as SectionInstructions, change status.
-                        case (SectionInstructions):
-                            status = RecipeReadStatus.Instruction; // Status is the instruction section.
-                            break;
+                            // If the readed line is the same as SectionInstructions, change status.
+                            case (SectionInstructions):
+                                status = RecipeReadStatus.Instruction; // Status is the instruction section.
+                                break;
 
-                        // If it's none of the above...
-                        default:
-                            // Check which status is currently active.
-                            switch (status)
-                            {
+                            // If it's a name, ingredient och instruction.
+                            default:
+
+                                // Check which status is currently active.
+                                switch (status)
+                                {
                                     // If it's a new recipe, create a new object from the Recipeclass with the recipes name (line).
-                                case RecipeReadStatus.New:
-                                    localRecipe = new Recipe(line);
-                                    recipes.Add(localRecipe);
-                                    break;
+                                    case RecipeReadStatus.New:
+                                        localRecipe = new Recipe(line);
+                                        recipes.Add(localRecipe);
+                                        break;
 
-                                    // It it's a ingredient, split the line into 3 sections, the ";" devides the sections.
-                                case RecipeReadStatus.Ingredient:
-                                    string[] splitIngredient = line.Split(new String[] { ";" }, StringSplitOptions.None);
+                                    // If it's a ingredient, split the line into 3 sections, the ";" devides the sections.
+                                    case RecipeReadStatus.Ingredient:
+                                        string[] splitIngredient = line.Split(new String[] { ";" }, StringSplitOptions.None);
 
-                                    // If it's more than 3 sections, something is wrong.
-                                    if (splitIngredient.Length != 3)
-                                    {
-                                        throw new FileFormatException();
-                                    }
+                                        // If it's more than 3 sections, something is wrong.
+                                        if (splitIngredient.Length != 3)
+                                        {
+                                            throw new FileFormatException();
+                                        }
 
-                                    // Create a ingredient object with the 3 sections, amount, measure and name.
-                                    Ingredient ingredient = new Ingredient();
-                                    ingredient.Amount = splitIngredient[0];
-                                    ingredient.Measure = splitIngredient[1];
-                                    ingredient.Name = splitIngredient[2];
-                                    localRecipe.Add(ingredient);
-                                    break;
+                                        // Create a ingredient object with the 3 sections, amount, measure and name.
+                                        Ingredient ingredient = new Ingredient();
+                                        ingredient.Amount = splitIngredient[0];
+                                        ingredient.Measure = splitIngredient[1];
+                                        ingredient.Name = splitIngredient[2];
+                                        localRecipe.Add(ingredient);
+                                        break;
 
                                     // If it's an instruction, just add the read line.
-                                case RecipeReadStatus.Instruction:
-                                    localRecipe.Add(line);
-                                    break;
+                                    case RecipeReadStatus.Instruction:
+                                        localRecipe.Add(line);
+                                        break;
 
                                     // If it's none of the above, something is wrong.
-                                case RecipeReadStatus.Indefinite:
-                                    throw new FileFormatException();
+                                    case RecipeReadStatus.Indefinite:
+                                        throw new FileFormatException();
 
-                            }
-                            break;
+                                }
+                                break;
+                        }
                     }
                 }
             }
+
+
             // 4-5 Sorts the list alphabetaclly.
             _recipes = recipes.OrderBy(recipe => recipe.Name).ToList();
 
@@ -217,12 +226,14 @@ namespace FiledRecipes.Domain
         }
 
 
+
         // Save method.
         // This also uses "virtual" since it should be able to be overridden in a derived class.
         public virtual void Save()
         {
+
             // 1. Opens the textfile.
-            using (StreamWriter writer = new StreamWriter("App_Data/Recipe.txt"))
+            using (StreamWriter writer = new StreamWriter(_path))
             {
 
                 // 2. Loop for all recipes.
@@ -247,6 +258,12 @@ namespace FiledRecipes.Domain
 
                     }
                 }
+
+                // 6. Indicates that the list with recipes are unchanged.
+                IsModified = false;
+
+                // 7. Event that tells the recipe has been read.
+                OnRecipesChanged(EventArgs.Empty);
             }
         }
     }
